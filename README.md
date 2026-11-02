@@ -121,4 +121,4 @@ Windows 上的 65 项核心、MCP 与真实 Harness 适配器测试、22 项工�
 - [私网只读访问](docs/private-viewing.md)：Tailscale Serve 配置范围与风险
 - [贡献说明](CONTRIBUTING.md)：开发、测试、文档和提交约定
 
-本项目采用 MIT 许可证，详见 [LICENSE](LICENSE) 与 [第三方依赖清单](THIRD_PARTY_NOTICES.md)。开发由用户组织主导，使用 Codex 与 DeepSeek 辅助；DeepSeek 参与了前端和文档工作。AI 辅助不改变第三方来源核验责任，也不表示 Apple、OpenAI、DeepSeek 或 Tailscale 的官方合作或安全认证。
+本项目采用 MIT 许可证，详见 [LICENSE](LICENSE) 与 [第三方依赖清单](THIRD_PARTY_NOTICES.md)。
