@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "project-shared-state": {
+      "command": "node",
+      "args": ["/absolute/path/project-state-workbench/server/src/mcp-server.js"],
+      "env": {
+        "PROJECT_STATE_ROOT": "/absolute/path/project-state-data/workspaces"
+      }
+    }
+  }
+}

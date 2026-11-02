@@ -1,0 +1,29 @@
+{
+  "name": "dsh-shared-state",
+  "version": "0.3.1",
+  "private": true,
+  "type": "module",
+  "description": "Cross-conversation project shared state for DeepSeek Harness, over the project-shared-state SQLite core.",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./handlers": "./lib/handlers.js",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22.5"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "project-shared-state-core": "file:../core"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "4.0.5",
+    "@deepseek-ai/dsh-commands": "0.0.1-rc.1",
+    "@deepseek-ai/dsh-system-prompt": "0.0.1-rc.5",
+    "@deepseek-ai/dsh-tools": "0.0.1-rc.1"
+  }
+}

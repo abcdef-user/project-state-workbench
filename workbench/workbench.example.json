@@ -1,0 +1,12 @@
+{
+  "dataDirectory": ".local-data/hub",
+  "storageRoot": ".local-data/workspaces",
+  "wslSources": [],
+  "remoteView": {
+    "enabled": false,
+    "port": 8770,
+    "scheme": "https",
+    "publicHost": "device.example.ts.net:8443",
+    "allowedLogin": "owner@example.invalid"
+  }
+}

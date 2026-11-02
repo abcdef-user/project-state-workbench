@@ -1,0 +1,26 @@
+{
+  "name": "project-state-workbench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local project shared state and a visual workbench for people and AI agents.",
+  "license": "MIT",
+  "workspaces": [
+    "core",
+    "server",
+    "dsh",
+    "workbench"
+  ],
+  "scripts": {
+    "start": "node workbench/app/start.cjs",
+    "serve": "node workbench/app/server.mjs",
+    "mcp": "node server/src/mcp-server.js",
+    "test": "node --test server/test/*.test.js dsh/test/*.test.js",
+    "test:workbench": "node scripts/check-workbench.mjs",
+    "check:release": "node scripts/check-release.mjs",
+    "stop": "node scripts/stop-workbench.mjs"
+  },
+  "engines": {
+    "node": ">=24.2.0"
+  }
+}

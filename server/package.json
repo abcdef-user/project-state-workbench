@@ -1,0 +1,21 @@
+{
+  "name": "project-shared-state",
+  "version": "0.5.0",
+  "private": true,
+  "type": "module",
+  "description": "Cross-conversation project state service backed by SQLite.",
+  "scripts": {
+    "test": "node --test",
+    "cli": "node src/cli.js",
+    "mcp": "node src/mcp-server.js",
+    "budget": "node scripts/roundtrip-budget.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "zod": "4.6.7"
+  },
+  "engines": {
+    "node": ">=22.5"
+  },
+  "license": "MIT"
+}
