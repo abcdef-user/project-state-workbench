@@ -12,8 +12,8 @@ using System.Reflection;
 [assembly: AssemblyTitle("项目工作台")]
 [assembly: AssemblyProduct("项目工作台")]
 [assembly: AssemblyDescription("本机项目工作台启动器")]
-[assembly: AssemblyVersion("1.3.2.0")]
-[assembly: AssemblyFileVersion("1.3.2.0")]
+[assembly: AssemblyVersion("1.3.3.0")]
+[assembly: AssemblyFileVersion("1.3.3.0")]
 
 internal static class Launcher {
     internal static readonly JavaScriptSerializer Json = new JavaScriptSerializer();

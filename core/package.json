@@ -1,6 +1,6 @@
 {
   "name": "project-shared-state-core",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": true,
   "type": "module",
   "description": "Host-neutral SQLite core for cross-conversation project shared state.",

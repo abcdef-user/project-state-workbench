@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { mkdtempSync, mkdirSync, renameSync, rmSync, readFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, renameSync, rmSync, readFileSync, symlinkSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve, relative, isAbsolute } from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
@@ -211,6 +211,18 @@ test('missing workspace recovers from retained metadata after router restart', (
     assert.equal(restored.workspace.recovered, true);
     assert.equal(JSON.parse(readFileSync(join(original.workspace.stateDirectory, 'workspace.json'), 'utf8')).rootPath, original.workspace.rootPath);
   } finally { next.close(); }
+});
+
+test('a missing workspace recovers through an alias of its surviving parent', (t) => {
+  const root=directory(t), actual=join(root,'actual-parent'), alias=join(root,'alias-parent');
+  mkdirSync(actual);symlinkSync(actual,alias,process.platform==='win32'?'junction':'dir');
+  const ws=join(alias,'ws');mkdirSync(ws);
+  const dataRoot=join(root,'states'),first=new WorkspaceStoreRouter({dataRoot});
+  const original=first.open(ws);task(original.store);first.close();
+  renameSync(join(actual,'ws'),join(actual,'moved'));
+  const next=new WorkspaceStoreRouter({dataRoot});
+  try{const restored=next.open(ws);assert.equal(restored.workspace.databasePath,original.workspace.databasePath);assert.equal(restored.store.getSurface({projectId:'p'}).tasks.length,1);}
+  finally{next.close();}
 });
 
 test('an omitted projectId defaults to the workspace directory name', (t) => {

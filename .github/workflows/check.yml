@@ -1,12 +1,14 @@
 name: Source and regression checks
 on:
   push:
+    branches: ['**']
   pull_request:
 permissions:
   contents: read
 jobs:
   check:
     strategy:
+      fail-fast: false
       matrix:
         os: [windows-latest, ubuntu-latest]
     runs-on: ${{ matrix.os }}

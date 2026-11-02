@@ -1,7 +1,7 @@
 # 贡献说明
 
-欢迎贡献代码、测试和文档。当前公开整合版本为 0.1.0，包含内核 0.5.0 与工作台 1.3.2；系统要求 Node.js 24.2+。开始前先读根 README、`RELEASE_CHECKS.md` 和相关文档，确认版本与状态，再写改动。当前检查结果见 [RELEASE_CHECKS.md](RELEASE_CHECKS.md)。
+欢迎贡献代码、测试和文档。当前公开整合版本为 0.1.1，包含内核 0.5.1 与工作台 1.3.3；系统要求 Node.js 24.2+。开始前先读根 README、`RELEASE_CHECKS.md` 和相关文档，确认版本与状态，再写改动。当前检查结果见 [RELEASE_CHECKS.md](RELEASE_CHECKS.md)。
 
-开发时使用锁文件安装依赖，例如 `npm ci --ignore-scripts`，然后按改动范围运行 `npm test`、`npm run test:workbench`、`npm run check:release`。Windows Node 24.18.1 上，64 项核心/MCP/真实 DSH 宿主测试、22 项工作台场景、19 项只读入口场景均通过；`npm audit`（含开发依赖）报告 0 个已知漏洞。请记录实际执行的命令和验收证据，不要只写“应该通过”。
+开发时使用锁文件安装依赖，例如 `npm ci --ignore-scripts`，然后按改动范围运行 `npm test`、`npm run test:workbench`、`npm run check:release`。Windows Node 24.18.1 上，65 项核心/MCP/真实 DSH 宿主测试、22 项工作台场景、19 项只读入口场景均通过；`npm audit`（含开发依赖）报告 0 个已知漏洞。请记录实际执行的命令和验收证据，不要只写“应该通过”。
 
 提交前不要包含真实项目镜像、数据库、日志、私密配置、API Key、账号、网络地址或旧 Git 历史。保留第三方代码和资产的许可与来源说明；贡献者应确保自己有权提交所附内容。AI 辅助生成的代码或文档需在提交说明中如实标注，并由人核验。MIT 许可不重新授权第三方资产，也不免除核验与合规责任。工具记录和 SQLite 历史不能证明现实任务真的执行，也不是防篡改审计；完成判断应覆盖每条验收条件。建议与已确认决策分开记录，优先使用批量工具减少往返。

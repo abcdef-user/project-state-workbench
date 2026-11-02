@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, realpathSync, writeFileSync } from "node:fs";
-import { basename, join, resolve } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 import { ProjectStateStore, StateError } from "./store.js";
 
 function requireWorkspaceRoot(value) {
@@ -30,6 +30,25 @@ function workspaceSlug(rootPath) {
     .replace(/[. ]+$/g, "")
     .slice(0, 48);
   return cleaned || "workspace";
+}
+
+// A moved leaf cannot be realpathed, but its surviving ancestors still can.
+// This preserves Windows short-name and junction aliases during recovery.
+function recoveryIdentity(value) {
+  let ancestor = resolve(value);
+  const missing = [];
+  while (true) {
+    try { ancestor = realpathSync.native(ancestor); break; }
+    catch (error) {
+      if (!['ENOENT', 'ENOTDIR'].includes(error.code)) throw error;
+      const parent = dirname(ancestor);
+      if (parent === ancestor) break;
+      missing.unshift(basename(ancestor));
+      ancestor = parent;
+    }
+  }
+  const canonical = join(ancestor, ...missing);
+  return process.platform === 'win32' ? canonical.toLowerCase() : canonical;
 }
 
 export function describeWorkspace(workspaceRoot, dataRoot) {
@@ -85,7 +104,7 @@ export class WorkspaceStoreRouter {
       workspace = describeWorkspace(root, this.dataRoot);
     } catch (error) {
       if (error.code !== 'WORKSPACE_NOT_FOUND') throw error;
-      const normalize = (path) => process.platform === 'win32' ? resolve(path).toLowerCase() : resolve(path);
+      const requestedIdentity = recoveryIdentity(root);
       const matches = [];
       for (const entry of existsSync(this.dataRoot) ? readdirSync(this.dataRoot, { withFileTypes: true }) : []) {
         if (!entry.isDirectory() || entry.isSymbolicLink()) continue;
@@ -93,7 +112,7 @@ export class WorkspaceStoreRouter {
         let metadata;
         try { metadata = JSON.parse(readFileSync(join(stateDirectory, 'workspace.json'), 'utf8')); }
         catch { continue; }
-        if (typeof metadata.rootPath !== 'string' || normalize(metadata.rootPath) !== normalize(root)) continue;
+        if (typeof metadata.rootPath !== 'string' || recoveryIdentity(metadata.rootPath) !== requestedIdentity) continue;
         const databasePath = join(stateDirectory, 'state.db');
         if (!existsSync(databasePath)) continue;
         matches.push({ workspaceId: entry.name, name: basename(metadata.rootPath), rootPath: metadata.rootPath,

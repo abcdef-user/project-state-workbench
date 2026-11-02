@@ -4,7 +4,7 @@ Checked on 2026-11-02 using Node.js 24.18.1 on Windows. These results describe t
 
 | Check | Result |
 |---|---|
-| Core, MCP and DeepSeek Harness adapter regressions | 64 passed, no skips |
+| Core, MCP and DeepSeek Harness adapter regressions | 65 passed, no skips |
 | Workbench fixture scenarios | 22 passed |
 | Private read-only gateway scenarios | 19 passed |
 | Dependency audit, including development dependencies | 0 known vulnerabilities reported by npm at the time of the check |
@@ -29,3 +29,6 @@ npm run test:workbench
 npm run check:release
 npm audit
 ```
+
+
+The 0.1.1 patch fixes two issues observed by GitHub runners: POSIX local paths are no longer inferred to be WSL paths on non-Windows hosts; missing-workspace recovery canonicalizes surviving parent directories so Windows short-name and junction aliases still match the saved workspace. A directory-alias regression covers the latter.

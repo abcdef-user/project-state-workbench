@@ -1,6 +1,6 @@
 # 快速上手
 
-Project State Workbench 是本地项目状态工作台。当前公开整合版 0.1.0，内核 0.5.0，Windows 工作台 1.3.2。系统要求 Node.js 24.2.0 或更高；开发与回归在 Windows Node 24.18.1 上完成。公开源码见 [GitHub 仓库](https://github.com/abcdef-user/project-state-workbench)。此版本提供源码，不提供预编译安装包。
+Project State Workbench 是本地项目状态工作台。当前公开整合版 0.1.1，内核 0.5.1，Windows 工作台 1.3.3。系统要求 Node.js 24.2.0 或更高；开发与回归在 Windows Node 24.18.1 上完成。公开源码见 [GitHub 仓库](https://github.com/abcdef-user/project-state-workbench)。此版本提供源码，不提供预编译安装包。
 
 ## 安装与启动
 
@@ -18,6 +18,6 @@ MCP 入口是 `node server/src/mcp-server.js`。为 MCP 宿主设置环境变量
 
 ## 验证与排障
 
-可运行 `npm test`、`npm run test:workbench`、`npm run check:release`。在 Windows Node 24.18.1 上，64 项核心/MCP/真实 DSH 宿主测试、22 项工作台场景、19 项只读入口场景均通过；`npm audit`（含开发依赖）报告 0 个已知漏洞。具体报告见根 [RELEASE_CHECKS.md](../RELEASE_CHECKS.md)。常见问题是 MCP 与工作台指向不同目录、`npm run serve` 未显式传配置参数，或把 Windows 与 WSL 的列表汇总误当成同一数据库。WSL 使用 Linux 原生路径和 worker，需要单独确认。
+可运行 `npm test`、`npm run test:workbench`、`npm run check:release`。在 Windows Node 24.18.1 上，65 项核心/MCP/真实 DSH 宿主测试、22 项工作台场景、19 项只读入口场景均通过；`npm audit`（含开发依赖）报告 0 个已知漏洞。具体报告见根 [RELEASE_CHECKS.md](../RELEASE_CHECKS.md)。常见问题是 MCP 与工作台指向不同目录、`npm run serve` 未显式传配置参数，或把 Windows 与 WSL 的列表汇总误当成同一数据库。WSL 使用 Linux 原生路径和 worker，需要单独确认。
 
 后台运行时，可执行 `npm run stop` 核验并停止当前配置数据目录的工作台；修改配置后再执行 `npm start`。如果改了 `dataDirectory`，应先停止旧实例，再修改该目录值。前台运行则用终端的 Ctrl+C 停止。单纯再次运行 `npm start` 会复用现有实例，不会应用新配置。

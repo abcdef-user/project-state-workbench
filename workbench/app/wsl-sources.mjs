@@ -4,7 +4,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { atomicJson, parse, problem } from './manager.mjs';
 
 const origin=s=>({sourceId:s.id,sourceLabel:s.label,sourceKind:s.kind});
-const local={id:'windows',label:'Windows',kind:'windows'};
+const local={id:'windows',label:process.platform==='win32'?'Windows':'本机',kind:'windows'};
 
 export class WslSource {
   constructor(config,dataDirectory){
@@ -78,7 +78,7 @@ export class UnifiedProjects {
     const native=this.manager.catalog(),remote=await Promise.all(this.sources.map(s=>s.catalog()));
     const projects=[...native.projects.map(p=>({...p,...origin(local)})),...remote.flatMap(r=>r.projects)];
     const env=native.environment;
-    const sources=[{id:'windows',label:'Windows',kind:'windows',available:true,projectCount:native.projects.length,workspaceCount:env.workspaceCount,storageRoot:this.manager.storageRoots[0],dataDirectory:this.manager.dataDirectory},...remote.map(r=>r.source)];
+    const sources=[{...local,available:true,projectCount:native.projects.length,workspaceCount:env.workspaceCount,storageRoot:this.manager.storageRoots[0],dataDirectory:this.manager.dataDirectory},...remote.map(r=>r.source)];
     return {...native,projects,environment:{...env,sources,workspaceCount:sources.reduce((n,s)=>n+(s.workspaceCount||0),0),emptyWorkspaces:[...env.emptyWorkspaces.map(e=>({...e,...origin(local)})),...remote.flatMap(r=>(r.environment.emptyWorkspaces||[]).map(e=>({...e,sourceId:r.source.id,sourceLabel:r.source.label,sourceKind:'wsl'})))],warnings:[...env.warnings,...remote.flatMap(r=>r.source.available?(r.environment.warnings||[]).map(w=>r.source.label+'：'+w):[r.source.label+'：'+r.source.error])]}};
   }
   async state(key){const r=this.route(key);return r?r.source.state(await r.source.request('state',{key:r.key})):this.localState(this.manager.state(key));}
@@ -92,8 +92,8 @@ export class UnifiedProjects {
     let source;
     if(match)source=this.sources.find(s=>s.config.distribution.toLowerCase()===match[1].toLowerCase());
     else if(body.sourceId&&body.sourceId!=='windows')source=this.sources.find(s=>s.config.id===body.sourceId);
-    else if(typeof value==='string'&&value.startsWith('/')&&this.sources.length===1)source=this.sources[0];
-    if((match||body.sourceId&&body.sourceId!=='windows'||typeof value==='string'&&value.startsWith('/'))&&!source)throw problem('SOURCE_REQUIRED','请选择已连接的 WSL 来源。');
+    else if(process.platform==='win32'&&typeof value==='string'&&value.startsWith('/')&&this.sources.length===1)source=this.sources[0];
+    if((match||body.sourceId&&body.sourceId!=='windows'||process.platform==='win32'&&typeof value==='string'&&value.startsWith('/'))&&!source)throw problem('SOURCE_REQUIRED','请选择已连接的 WSL 来源。');
     if(!source)return null;
     const workspaceRoot=match?(match[2]||'/').replaceAll('\\','/'):value;
     if(typeof workspaceRoot!=='string'||!workspaceRoot.startsWith('/'))throw problem('INVALID_INPUT','请输入 WSL 的完整文件夹路径。');

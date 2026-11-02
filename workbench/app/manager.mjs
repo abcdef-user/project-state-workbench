@@ -9,7 +9,7 @@ import { describeWorkspace } from './engine/workspace-store.js';
 import { createProjectContext, defaultSettings } from './project-store.mjs';
 
 export const APP_ID = 'project-workbench';
-export const VERSION = '1.3.2';
+export const VERSION = '1.3.3';
 export const SETTINGS_ID = 'D-PROJECT-SETTINGS';
 export const parse = (s, fallback = null) => { try { return JSON.parse(s); } catch { return fallback; } };
 export const problem = (code, message) => Object.assign(new Error(message), { code });

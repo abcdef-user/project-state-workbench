@@ -4,7 +4,7 @@ Project State Workbench keeps project state in a form that can survive between c
 
 It does not scan a folder and infer the whole project. Opening a directory only exposes whatever structured state has already been recorded for that workspace.
 
-This repository integrates version `0.1.0`, with kernel `0.5.0` and Windows workbench `1.3.2`. This is an initial source release; interfaces may evolve.
+This repository integrates version `0.1.1`, with kernel `0.5.1` and Windows workbench `1.3.3`. This is an initial source release; interfaces may evolve.
 
 ## Quick Start
 
@@ -59,7 +59,7 @@ docs/                Usage, architecture, and collaboration notes
 
 ## Validation Status
 
-On Windows, 64 core/MCP/real-Harness tests, 22 workbench checks and 19 read-only checks passed. The dependency audit reported no known vulnerabilities at check time. See [RELEASE_CHECKS.md](RELEASE_CHECKS.md) for limits and reproduction commands.
+On Windows, 65 core/MCP/real-Harness tests, 22 workbench checks and 19 read-only checks passed. The dependency audit reported no known vulnerabilities at check time. See [RELEASE_CHECKS.md](RELEASE_CHECKS.md) for limits and reproduction commands.
 
 ## More Documentation
 
