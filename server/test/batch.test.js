@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdirSync, mkdtempSync, rmSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, realpathSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -90,7 +90,7 @@ test("one batch call performs a whole registration: read, writes, verify", async
   assert.equal(batch.results[7].result.artifacts[0].contentHash, "h1");
   assert.equal(batch.results[7].result.operations[0].status, "started");
   assert.equal(batch.results[7].result.recentEvents.length > 0, true);
-  assert.equal(batch.workspace.rootPath, workspaceRoot);
+  assert.equal(batch.workspace.rootPath, realpathSync.native(workspaceRoot));
 });
 
 test("a batch inherits the session task scope and a batch-level actorId", async (t) => {
@@ -185,7 +185,7 @@ test("a batch-level actorId covers claimTask, and a batched read carries the wor
   assert.equal(batch.failed, 0, JSON.stringify(batch.results));
   assert.equal(batch.results[2].result.tasks[0].ownerAgent, "owner");
   // Same shape as project_get_surface: the surface fields plus the workspace.
-  assert.equal(batch.results[2].result.workspace.rootPath, workspaceRoot);
+  assert.equal(batch.results[2].result.workspace.rootPath, realpathSync.native(workspaceRoot));
   assert.equal(typeof batch.results[2].result.revision, "number");
 });
 
